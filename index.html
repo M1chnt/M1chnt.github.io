@@ -1,13 +1,27 @@
 <!DOCTYPE html>
-<html lang="ru">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="refresh" content="0; url=http://localhost:3000" />
-        <title>Redirecting...</title>
-    </head>
-    <body>
-        <p>
-            <a href="http://localhost:3000/">click</a>.
-        </p>
-    </body>
-</html>
+  <html lang="ru">
+  <head>
+      <meta charset="UTF-8" />
+      <title>Redirecting...</title>
+      <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+      <p>Redirecting... <a href="http://localhost:3000/">click if not redirected</a></p>
+
+      <script>
+          // Ждем инициализации Telegram WebApp
+          setTimeout(() => {
+              const tg = window.Telegram?.WebApp;
+
+              if (tg && tg.initData) {
+                  // Передаем initData через URL параметр
+                  const encodedInitData = encodeURIComponent(tg.initData);
+                  window.location.href = `http://localhost:3000?tgWebAppData=${encodedInitData}`;
+              } else {
+                  // Если нет initData, редиректим без неё
+                  window.location.href = 'http://localhost:3000';
+              }
+          }, 100); // Небольшая задержка для инициализации Telegram WebApp
+      </script>
+  </body>
+  </html>
